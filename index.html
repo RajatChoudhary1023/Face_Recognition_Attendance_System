@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance System</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .left-panel {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .right-panel {
+            width: 50%;
+            background-color: #f0f0f0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        #gspread {
+            width: 100%;
+            height: 100%;
+        }
+        .button {
+            width: 90px;
+            height: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .button-2 {
+            color: #fff;
+            border-radius: 10px;
+            /* border: 3px solid #c266d3; */
+            background-image: linear-gradient(30deg, cyan 50%, transparent 50%);
+            background-size: 500px;
+            background-repeat: no-repeat;
+            background-position: 0%;
+            color:black;
+            transition: background 300ms ease-in-out;
+        }
+        .button-2:hover {
+            background-position: 100%;
+            color: cyan;
+            background-color: black;
+        }
+
+
+
+        #place_image{
+            border-radius: 8px;
+        }
+        #before_camera{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+
+        }
+        #search{
+            width:150%;
+            text-align: left;
+            padding: 2%;
+            border-radius: 4px;
+            position: relative;
+            top:-160px;
+            left:-65px;
+        }
+        #google_spread{
+            width:50%;
+            padding:1%;
+            border-radius: 4px;
+            position: relative;
+            top:-140px;
+            right:-49px;
+        }
+        #empty{
+            position: relative;
+            right: -80px;
+            animation: scaleup 4s linear 0.3s infinite;
+            transform-origin: center;
+        }
+        #empty_text{
+            color:black;
+            font-size: medium;
+            text-align: center;
+            position: relative;
+            left:-76px;
+        }
+
+
+        .button:active{
+            scale:0.95;
+        }
+    </style>
+</head>
+<body>
+
+<div class="left-panel">
+    <p style="position: absolute; top:0; font-size:30px; font-weight: bolder; color:black">Attendance System</p>
+    <h4 style="color:black; font-size:23px; position: relative; top:-20px; left:-185px;">How it Works?</h4>
+    <ul style="position: relative; top:-40px; right:-20px; line-height: 190%; text-align:left; width: 80%;">
+        <li><b>Click the "Camera" Button:</b> Initiates the attendance process.</li>
+        <li><b>Camera Activates:</b> The system turns on the camera to scan for faces.</li>
+        <li><b>Face Detection:</b> The system automatically detects and recognizes the face.</li>
+        <li><b>Attendance Update:</b> Once the face is recognized above 60%, the attendance is marked as "Present."</li>
+        <li><b>Google Sheet Sync:</b> The attendance status is updated in real-time on Google Sheets from "Absent" to "Present."</li>
+    </ul>
+    <button class="button button-2"  onclick="start()">Camera</button>
+</div>
+
+<div class="right-panel">
+    <iframe src="YOUR_GOOGLE_SPREADSHEET-LINK" id="gspread"></iframe>
+</div>
+</div>
+
+<script>
+    const start = () => {
+        fetch("http://127.0.0.1:5000/", { method: "GET" })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.status);
+                document.getElementById('status').innerText = "Status: Camera Started";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    };
+</script>
+</body>
+</html>
